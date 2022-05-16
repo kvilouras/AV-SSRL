@@ -1,0 +1,64 @@
+resume: false
+test_only: false
+num_workers: 8
+test_freq: 1
+benchmark:
+  name: hmdb51-linear-8at16
+dataset:
+  name: hmdb51
+  batch_size: 32
+  fold: 1
+  video_clip_duration: 0.5
+  video_fps: 16.0
+  transforms: crop+color
+  crop_size: 224
+  color:
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  train:
+    split: train-split{fold}
+    use_augmentation: true
+    drop_last: true
+    use_shuffle: true
+    mode: clip
+    clips_per_video: 1
+  test:
+    split: test-split{fold}
+    use_augmentation: false
+    drop_last: false
+    use_shuffle: false
+    mode: clip
+    clips_per_video: 1
+  test_dense:
+    split: test-split{fold}
+    use_augmentation: false
+    use_shuffle: false
+    drop_last: false
+    mode: video
+    clips_per_video: 10
+optimizer:
+  name: adam
+  weight_decay: 0.0
+  num_epochs: 50
+  lr:
+    name: multistep
+    base_lr: 0.0001
+    gamma: 0.3
+    milestones:
+    - 20
+    - 30
+    - 40
+model:
+  name: MOSTWrapper
+  args:
+    n_classes: 51
+    feat_names:
+    - pool
+    pooling_ops:
+    - null
+    feat_dims:
+    - 512
+    use_bn:
+    - false

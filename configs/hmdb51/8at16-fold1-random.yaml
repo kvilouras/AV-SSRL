@@ -1,0 +1,61 @@
+resume: true
+test_only: false
+num_workers: 8
+test_freq: 5
+benchmark:
+  name: hmdb51-warmcls-8at16-random
+dataset:
+  name: hmdb51
+  batch_size: 32
+  fold: 1
+  video_clip_duration: 0.5
+  video_fps: 16.0
+  transforms: msc+color
+  crop_size: 224
+  color:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 0.2
+  train:
+    split: train-split{fold}
+    use_augmentation: true
+    drop_last: true
+    use_shuffle: true
+    mode: clip
+    clips_per_video: 25
+  test:
+    split: test-split{fold}
+    use_augmentation: false
+    drop_last: false
+    use_shuffle: false
+    mode: clip
+    clips_per_video: 1
+  test_dense:
+    split: test-split{fold}
+    use_augmentation: false
+    use_shuffle: false
+    drop_last: false
+    mode: video
+    clips_per_video: 10
+optimizer:
+  name: adam
+  weight_decay: 0.0
+  num_epochs: 100
+  lr:
+    name: multistep
+    base_lr: 0.0001
+    gamma: 0.3
+    milestones:
+    - 30
+    - 60
+    - 80
+model:
+  name: ClassificationWrapper
+  args:
+    n_classes: 51
+    feat_name: pool
+    pooling_op: null
+    feat_dim: 512
+    use_dropout: true
+    dropout: 0.5

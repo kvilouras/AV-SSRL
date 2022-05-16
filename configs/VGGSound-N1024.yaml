@@ -1,0 +1,78 @@
+resume: true
+test_only: false
+num_workers: 8
+test_freq: 1
+print_freq: 100
+dataset:
+  name: vggsound
+  batch_size: 32
+  video_clip_duration: 1.0
+  video_fps: 16.0
+  transforms: msc+color
+  crop_size: 224
+  audio_clip_duration: 2.0
+  audio_srate: 16000
+  spec_params:
+    n_fft: 512
+    hop_length: 256
+    n_mels: 128
+  tfmask_params:
+    time_mask_ratio: 0.2
+    time_mask_size: 5
+    freq_mask_ratio: 0.2
+    freq_mask_size: 3
+    var_masks: true
+  train:
+    split: train_subset
+    use_augmentation: true
+    drop_last: true
+    clips_per_video: 5
+  test:
+    split: test
+    use_augmentation: false
+    drop_last: true
+optimizer:
+  name: adam
+  weight_decay: 1.0e-05
+  num_epochs: 100
+  lr:
+    name: multistep
+    base_lr: 0.0005
+    gamma: 0.9
+    milestones:
+    - 10
+    - 20
+    - 30
+    - 40
+    - 50
+    - 60
+    - 70
+    - 80
+    - 90
+model:
+  name: VGGSound-N1024
+  model_dir: checkpoints/VGGSound
+  arch: av_wrapper
+  args:
+    proj_dim:
+    - 512
+    - 512
+    - 128
+    video_backbone: R2Plus1d
+    video_backbone_args:
+      depth: 18
+    audio_backbone: Conv2DNet
+    audio_backbone_args:
+      depth: 10
+loss:
+  name: xID
+  args:
+    num_instances: 50000
+    num_negatives: 1024
+    hard_neg_epoch: 10
+    N_hard: null
+    s: 512
+    s_prime: 128
+    momentum: 0.5
+    q: 0.001
+    lam: 0.01

@@ -1,0 +1,57 @@
+resume: true
+test_only: false
+num_workers: 8
+test_freq: 5
+benchmark:
+  name: ucf101-warmcls-8at16-random
+dataset:
+  name: ucf101
+  batch_size: 32
+  fold: 1
+  video_clip_duration: 0.5
+  video_fps: 16.0
+  transforms: msc+color
+  crop_size: 224
+  train:
+    split: trainlist{fold:02d}
+    use_augmentation: true
+    drop_last: true
+    use_shuffle: true
+    mode: clip
+    clips_per_video: 10
+  test:
+    split: testlist{fold:02d}
+    use_augmentation: false
+    drop_last: false
+    use_shuffle: false
+    mode: clip
+    clips_per_video: 5
+  test_dense:
+    split: testlist{fold:02d}
+    use_augmentation: false
+    use_shuffle: false
+    drop_last: false
+    mode: video
+    clips_per_video: 10
+optimizer:
+  name: adam
+  weight_decay: 0.0
+  num_epochs: 100
+  warmup_classifier: true
+  lr:
+    name: multistep
+    base_lr: 0.0001
+    gamma: 0.3
+    milestones:
+    - 30
+    - 60
+    - 80
+model:
+  name: ClassificationWrapper
+  args:
+    n_classes: 101
+    feat_name: pool
+    pooling_op: null
+    feat_dim: 512
+    use_dropout: true
+    dropout: 0.5
