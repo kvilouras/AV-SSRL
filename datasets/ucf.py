@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import subprocess
 from datasets.video_dataset import VideoDataset
 import numpy as np
 import random
@@ -29,6 +30,21 @@ class UCF(VideoDataset):
             filenames.pop(i - itr)
             labels.pop(i - itr)
         labels = [self.classes.index(cls) for cls in labels]
+
+        # if audio stream needs to be returned, then remove all videos with no audio!
+        if return_audio:
+            indices = []
+            for i in range(len(filenames)):
+                pr = subprocess.Popen(
+                    ["bash", "ffprobe_audio_stream_exists.sh", os.path.join(DATA_PATH, filenames[i])],
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True
+                )
+                std_out, std_err = pr.communicate()
+                if eval(std_out):
+                    indices.append(i)
+            for itr, i in enumerate(indices):
+                filenames.pop(i - itr)
+                labels.pop(i - itr)
 
         # seen/unseen concepts split
         if 'rest_classes' in kwargs:
