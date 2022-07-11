@@ -1,5 +1,4 @@
 # AV-SSRL
-MSc Thesis "Audio-Visual Self-Supervised Representation Learning for Action Recognition" (WIP)
 MSc Thesis "Audio-Visual Self-Supervised Representation Learning in-the-wild"
 
 ## Pre-trained models
