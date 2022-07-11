@@ -60,6 +60,9 @@ python3 eval-action-recg-linear.py configs/ucf/8at16-linear.yaml configs/VGGSoun
 
 Final results are depicted in the following plots:
 
+<img src="https://github.com/kvilouras/AV-SSRL/blob/main/results/ucf_dot.png" width="700" height="500" />
+
+<img src="https://github.com/kvilouras/AV-SSRL/blob/main/results/hmdb_dot.png" width="700" height="500" />
 
 ## References
 - [AVID-CMA repository](https://github.com/facebookresearch/AVID-CMA)
