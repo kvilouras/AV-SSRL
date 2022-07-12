@@ -1,5 +1,5 @@
 # AV-SSRL
-MSc Thesis "Audio-Visual Self-Supervised Representation Learning in-the-wild"
+MSc Thesis: ["Audio-Visual Self-Supervised Representation Learning in-the-wild"](https://drive.google.com/file/d/1fuM6i8RSyRgJoMwcHRlOR_XQEZ7ioVwA/view?usp=sharing)
 
 ## Pre-trained models
 We provide checkpoints for models pre-trained on a subset of [VGGSound](https://www.robots.ox.ac.uk/~vgg/data/vggsound/) with 50,000 videos. The former method refers to *Cross-modal Instance Discrimination (xID)*, whereas the latter is based on the recently proposed *VICReg* method.
@@ -60,9 +60,9 @@ python3 eval-action-recg-linear.py configs/ucf/8at16-linear.yaml configs/VGGSoun
 
 Final results are depicted in the following plots:
 
-<img src="https://github.com/kvilouras/AV-SSRL/blob/main/results/ucf_dot.png" width="700" height="500" />
+<img src="https://github.com/kvilouras/AV-SSRL/blob/main/results/ucf_dot.png" width="600" height="400" />
 
-<img src="https://github.com/kvilouras/AV-SSRL/blob/main/results/hmdb_dot.png" width="700" height="500" />
+<img src="https://github.com/kvilouras/AV-SSRL/blob/main/results/hmdb_dot.png" width="600" height="400" />
 
 ## References
 - [AVID-CMA repository](https://github.com/facebookresearch/AVID-CMA)
